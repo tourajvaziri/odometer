@@ -1,0 +1,2030 @@
+<!doctype html>
+<html lang="en">
+<head>
+    <title>Code coverage report for odometer/odometer.js</title>
+    <meta charset="utf-8" />
+    <link rel="stylesheet" href="../prettify.css" />
+    <link rel="stylesheet" href="../base.css" />
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <style type='text/css'>
+        .coverage-summary .sorter {
+            background-image: url(../sort-arrow-sprite.png);
+        }
+    </style>
+</head>
+<body>
+<div class='wrapper'>
+  <div class='pad1'>
+    <h1>
+      <a href="../index.html">all files</a> / <a href="index.html">odometer/</a> odometer.js
+    </h1>
+    <div class='clearfix'>
+      <div class='fl pad1y space-right2'>
+        <span class="strong">17.97% </span>
+        <span class="quiet">Statements</span>
+        <span class='fraction'>78/434</span>
+      </div>
+      <div class='fl pad1y space-right2'>
+        <span class="strong">11.32% </span>
+        <span class="quiet">Branches</span>
+        <span class='fraction'>24/212</span>
+      </div>
+      <div class='fl pad1y space-right2'>
+        <span class="strong">12.5% </span>
+        <span class="quiet">Functions</span>
+        <span class='fraction'>6/48</span>
+      </div>
+      <div class='fl pad1y space-right2'>
+        <span class="strong">18.01% </span>
+        <span class="quiet">Lines</span>
+        <span class='fraction'>78/433</span>
+      </div>
+    </div>
+  </div>
+  <div class='status-line low'></div>
+<pre><table class="coverage">
+<tr><td class="line-count quiet">1
+2
+3
+4
+5
+6
+7
+8
+9
+10
+11
+12
+13
+14
+15
+16
+17
+18
+19
+20
+21
+22
+23
+24
+25
+26
+27
+28
+29
+30
+31
+32
+33
+34
+35
+36
+37
+38
+39
+40
+41
+42
+43
+44
+45
+46
+47
+48
+49
+50
+51
+52
+53
+54
+55
+56
+57
+58
+59
+60
+61
+62
+63
+64
+65
+66
+67
+68
+69
+70
+71
+72
+73
+74
+75
+76
+77
+78
+79
+80
+81
+82
+83
+84
+85
+86
+87
+88
+89
+90
+91
+92
+93
+94
+95
+96
+97
+98
+99
+100
+101
+102
+103
+104
+105
+106
+107
+108
+109
+110
+111
+112
+113
+114
+115
+116
+117
+118
+119
+120
+121
+122
+123
+124
+125
+126
+127
+128
+129
+130
+131
+132
+133
+134
+135
+136
+137
+138
+139
+140
+141
+142
+143
+144
+145
+146
+147
+148
+149
+150
+151
+152
+153
+154
+155
+156
+157
+158
+159
+160
+161
+162
+163
+164
+165
+166
+167
+168
+169
+170
+171
+172
+173
+174
+175
+176
+177
+178
+179
+180
+181
+182
+183
+184
+185
+186
+187
+188
+189
+190
+191
+192
+193
+194
+195
+196
+197
+198
+199
+200
+201
+202
+203
+204
+205
+206
+207
+208
+209
+210
+211
+212
+213
+214
+215
+216
+217
+218
+219
+220
+221
+222
+223
+224
+225
+226
+227
+228
+229
+230
+231
+232
+233
+234
+235
+236
+237
+238
+239
+240
+241
+242
+243
+244
+245
+246
+247
+248
+249
+250
+251
+252
+253
+254
+255
+256
+257
+258
+259
+260
+261
+262
+263
+264
+265
+266
+267
+268
+269
+270
+271
+272
+273
+274
+275
+276
+277
+278
+279
+280
+281
+282
+283
+284
+285
+286
+287
+288
+289
+290
+291
+292
+293
+294
+295
+296
+297
+298
+299
+300
+301
+302
+303
+304
+305
+306
+307
+308
+309
+310
+311
+312
+313
+314
+315
+316
+317
+318
+319
+320
+321
+322
+323
+324
+325
+326
+327
+328
+329
+330
+331
+332
+333
+334
+335
+336
+337
+338
+339
+340
+341
+342
+343
+344
+345
+346
+347
+348
+349
+350
+351
+352
+353
+354
+355
+356
+357
+358
+359
+360
+361
+362
+363
+364
+365
+366
+367
+368
+369
+370
+371
+372
+373
+374
+375
+376
+377
+378
+379
+380
+381
+382
+383
+384
+385
+386
+387
+388
+389
+390
+391
+392
+393
+394
+395
+396
+397
+398
+399
+400
+401
+402
+403
+404
+405
+406
+407
+408
+409
+410
+411
+412
+413
+414
+415
+416
+417
+418
+419
+420
+421
+422
+423
+424
+425
+426
+427
+428
+429
+430
+431
+432
+433
+434
+435
+436
+437
+438
+439
+440
+441
+442
+443
+444
+445
+446
+447
+448
+449
+450
+451
+452
+453
+454
+455
+456
+457
+458
+459
+460
+461
+462
+463
+464
+465
+466
+467
+468
+469
+470
+471
+472
+473
+474
+475
+476
+477
+478
+479
+480
+481
+482
+483
+484
+485
+486
+487
+488
+489
+490
+491
+492
+493
+494
+495
+496
+497
+498
+499
+500
+501
+502
+503
+504
+505
+506
+507
+508
+509
+510
+511
+512
+513
+514
+515
+516
+517
+518
+519
+520
+521
+522
+523
+524
+525
+526
+527
+528
+529
+530
+531
+532
+533
+534
+535
+536
+537
+538
+539
+540
+541
+542
+543
+544
+545
+546
+547
+548
+549
+550
+551
+552
+553
+554
+555
+556
+557
+558
+559
+560
+561
+562
+563
+564
+565
+566
+567
+568
+569
+570
+571
+572
+573
+574
+575
+576
+577
+578
+579
+580
+581
+582
+583
+584
+585
+586
+587
+588
+589
+590
+591
+592
+593
+594
+595
+596
+597
+598
+599
+600
+601
+602
+603
+604
+605
+606
+607
+608
+609
+610
+611
+612
+613
+614
+615
+616
+617
+618
+619
+620
+621
+622
+623
+624
+625
+626
+627
+628
+629
+630
+631
+632
+633
+634
+635
+636
+637
+638
+639
+640
+641
+642
+643
+644
+645
+646
+647
+648
+649
+650
+651
+652
+653
+654
+655
+656</td><td class="line-coverage quiet"><span class="cline-any cline-yes">2×</span>
+<span class="cline-any cline-yes">2×</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">2×</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">2×</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">2×</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">2×</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">2×</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">2×</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">2×</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">2×</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">2×</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">2×</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">2×</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">2×</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">2×</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">2×</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">2×</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">2×</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">2×</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">2×</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">2×</span>
+<span class="cline-any cline-yes">2×</span>
+<span class="cline-any cline-yes">2×</span>
+<span class="cline-any cline-yes">2×</span>
+<span class="cline-any cline-yes">2×</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">2×</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">2×</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">2×</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">2×</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">2×</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">2×</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">2×</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">2×</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">2×</span>
+<span class="cline-any cline-yes">2×</span>
+<span class="cline-any cline-yes">2×</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">2×</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">2×</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">2×</span>
+<span class="cline-any cline-yes">1×</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">2×</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">2×</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">2×</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">2×</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">2×</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">2×</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">2×</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">2×</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">2×</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">2×</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">2×</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">2×</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">2×</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">2×</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">2×</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">2×</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">2×</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">2×</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">2×</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">2×</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">2×</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">2×</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">2×</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">2×</span>
+<span class="cline-any cline-yes">2×</span>
+<span class="cline-any cline-yes">2×</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">2×</span>
+<span class="cline-any cline-yes">2×</span>
+<span class="cline-any cline-yes">2×</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">2×</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">2×</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">2×</span>
+<span class="cline-any cline-yes">2×</span>
+<span class="cline-any cline-yes">2×</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">2×</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">2×</span>
+<span class="cline-any cline-yes">2×</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">2×</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span></td><td class="text"><pre class="prettyprint lang-js">(function() {
+  var COUNT_FRAMERATE, COUNT_MS_PER_FRAME, DIGIT_FORMAT, DIGIT_HTML, DIGIT_SPEEDBOOST, DURATION, FORMAT_MARK_HTML, FORMAT_PARSER, FRAMERATE, FRAMES_PER_VALUE, MS_PER_FRAME, MutationObserver, Odometer, RIBBON_HTML, TRANSITION_END_EVENTS, TRANSITION_SUPPORT, VALUE_HTML, addClass, createFromHTML, fractionalPart, now, removeClass, requestAnimationFrame, round, transitionCheckStyles, trigger, truncate, wrapJQuery, _jQueryWrapped, _old, _ref, _ref1,
+    __slice = [].slice;
+&nbsp;
+  VALUE_HTML = '&lt;span class="odometer-value"&gt;&lt;/span&gt;';
+&nbsp;
+  RIBBON_HTML = '&lt;span class="odometer-ribbon"&gt;&lt;span class="odometer-ribbon-inner"&gt;' + VALUE_HTML + '&lt;/span&gt;&lt;/span&gt;';
+&nbsp;
+  DIGIT_HTML = '&lt;span class="odometer-digit"&gt;&lt;span class="odometer-digit-spacer"&gt;8&lt;/span&gt;&lt;span class="odometer-digit-inner"&gt;' + RIBBON_HTML + '&lt;/span&gt;&lt;/span&gt;';
+&nbsp;
+  FORMAT_MARK_HTML = '&lt;span class="odometer-formatting-mark"&gt;&lt;/span&gt;';
+&nbsp;
+  DIGIT_FORMAT = '(,ddd).dd';
+&nbsp;
+  FORMAT_PARSER = /^\(?([^)]*)\)?(?:(.)(d+))?$/;
+&nbsp;
+  FRAMERATE = 30;
+&nbsp;
+  DURATION = 2000;
+&nbsp;
+  COUNT_FRAMERATE = 20;
+&nbsp;
+  FRAMES_PER_VALUE = 2;
+&nbsp;
+  DIGIT_SPEEDBOOST = .5;
+&nbsp;
+  MS_PER_FRAME = 1000 / FRAMERATE;
+&nbsp;
+  COUNT_MS_PER_FRAME = 1000 / COUNT_FRAMERATE;
+&nbsp;
+  TRANSITION_END_EVENTS = 'transitionend webkitTransitionEnd oTransitionEnd otransitionend MSTransitionEnd';
+&nbsp;
+  transitionCheckStyles = document.createElement('div').style;
+&nbsp;
+  TRANSITION_SUPPORT = (transitionCheckStyles.transition != null) || (transitionCheckStyles.webkitTransition != null) || (<span class="branch-2 cbranch-no" title="branch not covered" >transitionCheckStyles.mozTransition != null)</span> || (<span class="branch-3 cbranch-no" title="branch not covered" >transitionCheckStyles.oTransition != null)</span>;
+&nbsp;
+  requestAnimationFrame = window.requestAnimationFrame || window.mozRequestAnimationFrame || window.webkitRequestAnimationFrame || window.msRequestAnimationFrame;
+&nbsp;
+  MutationObserver = window.MutationObserver || window.WebKitMutationObserver || window.MozMutationObserver;
+&nbsp;
+  createFromHTML = function(html) {
+    var el;
+    el = document.createElement('div');
+    el.innerHTML = html;
+    return el.children[0];
+  };
+&nbsp;
+  removeClass = <span class="fstat-no" title="function not covered" >function(el, name) {</span>
+<span class="cstat-no" title="statement not covered" >    return el.className = el.className.replace(new RegExp("(^| )" + (name.split(' ').join('|')) + "( |$)", 'gi'), ' ');</span>
+  };
+&nbsp;
+  addClass = <span class="fstat-no" title="function not covered" >function(el, name) {</span>
+<span class="cstat-no" title="statement not covered" >    removeClass(el, name);</span>
+<span class="cstat-no" title="statement not covered" >    return el.className += " " + name;</span>
+  };
+&nbsp;
+  trigger = <span class="fstat-no" title="function not covered" >function(el, name) {</span>
+<span class="cstat-no" title="statement not covered" >    var evt;</span>
+<span class="cstat-no" title="statement not covered" >    if (document.createEvent != null) {</span>
+<span class="cstat-no" title="statement not covered" >      evt = document.createEvent('HTMLEvents');</span>
+<span class="cstat-no" title="statement not covered" >      evt.initEvent(name, true, true);</span>
+<span class="cstat-no" title="statement not covered" >      return el.dispatchEvent(evt);</span>
+    }
+  };
+&nbsp;
+  now = <span class="fstat-no" title="function not covered" >function() {</span>
+<span class="cstat-no" title="statement not covered" >    var _ref, _ref1;</span>
+<span class="cstat-no" title="statement not covered" >    return (_ref = (_ref1 = window.performance) != null ? typeof _ref1.now === "function" ? _ref1.now() : void 0 : void 0) != null ? _ref : +(new Date);</span>
+  };
+&nbsp;
+  round = <span class="fstat-no" title="function not covered" >function(val, precision) {</span>
+<span class="cstat-no" title="statement not covered" >    if (precision == null) {</span>
+<span class="cstat-no" title="statement not covered" >      precision = 0;</span>
+    }
+<span class="cstat-no" title="statement not covered" >    if (!precision) {</span>
+<span class="cstat-no" title="statement not covered" >      return Math.round(val);</span>
+    }
+<span class="cstat-no" title="statement not covered" >    val *= Math.pow(10, precision);</span>
+<span class="cstat-no" title="statement not covered" >    val += 0.5;</span>
+<span class="cstat-no" title="statement not covered" >    val = Math.floor(val);</span>
+<span class="cstat-no" title="statement not covered" >    return val /= Math.pow(10, precision);</span>
+  };
+&nbsp;
+  truncate = <span class="fstat-no" title="function not covered" >function(val) {</span>
+<span class="cstat-no" title="statement not covered" >    if (val &lt; 0) {</span>
+<span class="cstat-no" title="statement not covered" >      return Math.ceil(val);</span>
+    } else {
+<span class="cstat-no" title="statement not covered" >      return Math.floor(val);</span>
+    }
+  };
+&nbsp;
+  fractionalPart = <span class="fstat-no" title="function not covered" >function(val) {</span>
+<span class="cstat-no" title="statement not covered" >    return val - round(val);</span>
+  };
+&nbsp;
+  _jQueryWrapped = false;
+&nbsp;
+  (wrapJQuery = function() {
+    var property, _i, _len, _ref, _results;
+    <span class="missing-if-branch" title="if path not taken" >I</span>if (_jQueryWrapped) {
+<span class="cstat-no" title="statement not covered" >      return;</span>
+    }
+    <span class="missing-if-branch" title="if path not taken" >I</span>if (window.jQuery != null) {
+<span class="cstat-no" title="statement not covered" >      _jQueryWrapped = true;</span>
+<span class="cstat-no" title="statement not covered" >      _ref = ['html', 'text'];</span>
+<span class="cstat-no" title="statement not covered" >      _results = [];</span>
+<span class="cstat-no" title="statement not covered" >      for (_i = 0, _len = _ref.length; _i &lt; _len; _i++) {</span>
+<span class="cstat-no" title="statement not covered" >        property = _ref[_i];</span>
+<span class="cstat-no" title="statement not covered" >        _results.push((<span class="fstat-no" title="function not covered" >function(property) {</span></span>
+<span class="cstat-no" title="statement not covered" >          var old;</span>
+<span class="cstat-no" title="statement not covered" >          old = window.jQuery.fn[property];</span>
+<span class="cstat-no" title="statement not covered" >          return window.jQuery.fn[property] = <span class="fstat-no" title="function not covered" >function(val) {</span></span>
+<span class="cstat-no" title="statement not covered" >            var _ref1;</span>
+<span class="cstat-no" title="statement not covered" >            if ((val == null) || (((_ref1 = this[0]) != null ? _ref1.odometer : void 0) == null)) {</span>
+<span class="cstat-no" title="statement not covered" >              return old.apply(this, arguments);</span>
+            }
+<span class="cstat-no" title="statement not covered" >            return this[0].odometer.update(val);</span>
+          };
+        })(property));
+      }
+<span class="cstat-no" title="statement not covered" >      return _results;</span>
+    }
+  })();
+&nbsp;
+  setTimeout(wrapJQuery, 0);
+&nbsp;
+  Odometer = (function() {
+<span class="fstat-no" title="function not covered" >    function Odometer(options) {</span>
+<span class="cstat-no" title="statement not covered" >      var e, k, property, v, _base, _i, _len, _ref, _ref1, _ref2,</span>
+        _this = this;
+<span class="cstat-no" title="statement not covered" >      this.options = options;</span>
+<span class="cstat-no" title="statement not covered" >      this.el = this.options.el;</span>
+<span class="cstat-no" title="statement not covered" >      if (this.el.odometer != null) {</span>
+<span class="cstat-no" title="statement not covered" >        return this.el.odometer;</span>
+      }
+<span class="cstat-no" title="statement not covered" >      this.el.odometer = this;</span>
+<span class="cstat-no" title="statement not covered" >      _ref = Odometer.options;</span>
+<span class="cstat-no" title="statement not covered" >      for (k in _ref) {</span>
+<span class="cstat-no" title="statement not covered" >        v = _ref[k];</span>
+<span class="cstat-no" title="statement not covered" >        if (this.options[k] == null) {</span>
+<span class="cstat-no" title="statement not covered" >          this.options[k] = v;</span>
+        }
+      }
+<span class="cstat-no" title="statement not covered" >      if ((_base = this.options).duration == null) {</span>
+<span class="cstat-no" title="statement not covered" >        _base.duration = DURATION;</span>
+      }
+<span class="cstat-no" title="statement not covered" >      this.MAX_VALUES = ((this.options.duration / MS_PER_FRAME) / FRAMES_PER_VALUE) | 0;</span>
+<span class="cstat-no" title="statement not covered" >      this.resetFormat();</span>
+<span class="cstat-no" title="statement not covered" >      this.value = this.cleanValue((_ref1 = this.options.value) != null ? _ref1 : '');</span>
+<span class="cstat-no" title="statement not covered" >      this.renderInside();</span>
+<span class="cstat-no" title="statement not covered" >      this.render();</span>
+<span class="cstat-no" title="statement not covered" >      try {</span>
+<span class="cstat-no" title="statement not covered" >        _ref2 = ['innerHTML', 'innerText', 'textContent'];</span>
+<span class="cstat-no" title="statement not covered" >        for (_i = 0, _len = _ref2.length; _i &lt; _len; _i++) {</span>
+<span class="cstat-no" title="statement not covered" >          property = _ref2[_i];</span>
+<span class="cstat-no" title="statement not covered" >          if (this.el[property] != null) {</span>
+<span class="cstat-no" title="statement not covered" >            (<span class="fstat-no" title="function not covered" >function(property) {</span></span>
+<span class="cstat-no" title="statement not covered" >              return Object.defineProperty(_this.el, property, {</span>
+                get: <span class="fstat-no" title="function not covered" >function() {</span>
+<span class="cstat-no" title="statement not covered" >                  var _ref3;</span>
+<span class="cstat-no" title="statement not covered" >                  if (property === 'innerHTML') {</span>
+<span class="cstat-no" title="statement not covered" >                    return _this.inside.outerHTML;</span>
+                  } else {
+<span class="cstat-no" title="statement not covered" >                    return (_ref3 = _this.inside.innerText) != null ? _ref3 : _this.inside.textContent;</span>
+                  }
+                },
+                set: <span class="fstat-no" title="function not covered" >function(val) {</span>
+<span class="cstat-no" title="statement not covered" >                  return _this.update(val);</span>
+                }
+              });
+            })(property);
+          }
+        }
+      } catch (_error) {
+<span class="cstat-no" title="statement not covered" >        e = _error;</span>
+<span class="cstat-no" title="statement not covered" >        this.watchForMutations();</span>
+      }
+<span class="cstat-no" title="statement not covered" >      this;</span>
+    }
+&nbsp;
+    Odometer.prototype.renderInside = <span class="fstat-no" title="function not covered" >function() {</span>
+<span class="cstat-no" title="statement not covered" >      this.inside = document.createElement('div');</span>
+<span class="cstat-no" title="statement not covered" >      this.inside.className = 'odometer-inside';</span>
+<span class="cstat-no" title="statement not covered" >      this.el.innerHTML = '';</span>
+<span class="cstat-no" title="statement not covered" >      return this.el.appendChild(this.inside);</span>
+    };
+&nbsp;
+    Odometer.prototype.watchForMutations = <span class="fstat-no" title="function not covered" >function() {</span>
+<span class="cstat-no" title="statement not covered" >      var e,</span>
+        _this = this;
+<span class="cstat-no" title="statement not covered" >      if (MutationObserver == null) {</span>
+<span class="cstat-no" title="statement not covered" >        return;</span>
+      }
+<span class="cstat-no" title="statement not covered" >      try {</span>
+<span class="cstat-no" title="statement not covered" >        if (this.observer == null) {</span>
+<span class="cstat-no" title="statement not covered" >          this.observer = new MutationObserver(<span class="fstat-no" title="function not covered" >function(mutations) {</span></span>
+<span class="cstat-no" title="statement not covered" >            var newVal;</span>
+<span class="cstat-no" title="statement not covered" >            newVal = _this.el.innerText;</span>
+<span class="cstat-no" title="statement not covered" >            _this.renderInside();</span>
+<span class="cstat-no" title="statement not covered" >            _this.render(_this.value);</span>
+<span class="cstat-no" title="statement not covered" >            return _this.update(newVal);</span>
+          });
+        }
+<span class="cstat-no" title="statement not covered" >        this.watchMutations = true;</span>
+<span class="cstat-no" title="statement not covered" >        return this.startWatchingMutations();</span>
+      } catch (_error) {
+<span class="cstat-no" title="statement not covered" >        e = _error;</span>
+      }
+    };
+&nbsp;
+    Odometer.prototype.startWatchingMutations = <span class="fstat-no" title="function not covered" >function() {</span>
+<span class="cstat-no" title="statement not covered" >      if (this.watchMutations) {</span>
+<span class="cstat-no" title="statement not covered" >        return this.observer.observe(this.el, {</span>
+          childList: true
+        });
+      }
+    };
+&nbsp;
+    Odometer.prototype.stopWatchingMutations = <span class="fstat-no" title="function not covered" >function() {</span>
+<span class="cstat-no" title="statement not covered" >      var _ref;</span>
+<span class="cstat-no" title="statement not covered" >      return (_ref = this.observer) != null ? _ref.disconnect() : void 0;</span>
+    };
+&nbsp;
+    Odometer.prototype.cleanValue = <span class="fstat-no" title="function not covered" >function(val) {</span>
+<span class="cstat-no" title="statement not covered" >      var _ref;</span>
+<span class="cstat-no" title="statement not covered" >      if (typeof val === 'string') {</span>
+<span class="cstat-no" title="statement not covered" >        val = val.replace((_ref = this.format.radix) != null ? _ref : '.', '&lt;radix&gt;');</span>
+<span class="cstat-no" title="statement not covered" >        val = val.replace(/[.,]/g, '');</span>
+<span class="cstat-no" title="statement not covered" >        val = val.replace('&lt;radix&gt;', '.');</span>
+<span class="cstat-no" title="statement not covered" >        val = parseFloat(val, 10) || 0;</span>
+      }
+<span class="cstat-no" title="statement not covered" >      return round(val, this.format.precision);</span>
+    };
+&nbsp;
+    Odometer.prototype.bindTransitionEnd = <span class="fstat-no" title="function not covered" >function() {</span>
+<span class="cstat-no" title="statement not covered" >      var event, renderEnqueued, _i, _len, _ref, _results,</span>
+        _this = this;
+<span class="cstat-no" title="statement not covered" >      if (this.transitionEndBound) {</span>
+<span class="cstat-no" title="statement not covered" >        return;</span>
+      }
+<span class="cstat-no" title="statement not covered" >      this.transitionEndBound = true;</span>
+<span class="cstat-no" title="statement not covered" >      renderEnqueued = false;</span>
+<span class="cstat-no" title="statement not covered" >      _ref = TRANSITION_END_EVENTS.split(' ');</span>
+<span class="cstat-no" title="statement not covered" >      _results = [];</span>
+<span class="cstat-no" title="statement not covered" >      for (_i = 0, _len = _ref.length; _i &lt; _len; _i++) {</span>
+<span class="cstat-no" title="statement not covered" >        event = _ref[_i];</span>
+<span class="cstat-no" title="statement not covered" >        _results.push(this.el.addEventListener(event, <span class="fstat-no" title="function not covered" >function() {</span></span>
+<span class="cstat-no" title="statement not covered" >          if (renderEnqueued) {</span>
+<span class="cstat-no" title="statement not covered" >            return true;</span>
+          }
+<span class="cstat-no" title="statement not covered" >          renderEnqueued = true;</span>
+<span class="cstat-no" title="statement not covered" >          setTimeout(<span class="fstat-no" title="function not covered" >function() {</span></span>
+<span class="cstat-no" title="statement not covered" >            _this.render();</span>
+<span class="cstat-no" title="statement not covered" >            renderEnqueued = false;</span>
+<span class="cstat-no" title="statement not covered" >            return trigger(_this.el, 'odometerdone');</span>
+          }, 0);
+<span class="cstat-no" title="statement not covered" >          return true;</span>
+        }, false));
+      }
+<span class="cstat-no" title="statement not covered" >      return _results;</span>
+    };
+&nbsp;
+    Odometer.prototype.resetFormat = <span class="fstat-no" title="function not covered" >function() {</span>
+<span class="cstat-no" title="statement not covered" >      var format, fractional, parsed, precision, radix, repeating, _ref, _ref1;</span>
+<span class="cstat-no" title="statement not covered" >      format = (_ref = this.options.format) != null ? _ref : DIGIT_FORMAT;</span>
+<span class="cstat-no" title="statement not covered" >      format || (format = 'd');</span>
+<span class="cstat-no" title="statement not covered" >      parsed = FORMAT_PARSER.exec(format);</span>
+<span class="cstat-no" title="statement not covered" >      if (!parsed) {</span>
+<span class="cstat-no" title="statement not covered" >        throw new Error("Odometer: Unparsable digit format");</span>
+      }
+<span class="cstat-no" title="statement not covered" >      _ref1 = parsed.slice(1, 4), repeating = _ref1[0], radix = _ref1[1], fractional = _ref1[2];</span>
+<span class="cstat-no" title="statement not covered" >      precision = (fractional != null ? fractional.length : void 0) || 0;</span>
+<span class="cstat-no" title="statement not covered" >      return this.format = {</span>
+        repeating: repeating,
+        radix: radix,
+        precision: precision
+      };
+    };
+&nbsp;
+    Odometer.prototype.render = <span class="fstat-no" title="function not covered" >function(value) {</span>
+<span class="cstat-no" title="statement not covered" >      var classes, cls, match, newClasses, theme, _i, _len;</span>
+<span class="cstat-no" title="statement not covered" >      if (value == null) {</span>
+<span class="cstat-no" title="statement not covered" >        value = this.value;</span>
+      }
+<span class="cstat-no" title="statement not covered" >      this.stopWatchingMutations();</span>
+<span class="cstat-no" title="statement not covered" >      this.resetFormat();</span>
+<span class="cstat-no" title="statement not covered" >      this.inside.innerHTML = '';</span>
+<span class="cstat-no" title="statement not covered" >      theme = this.options.theme;</span>
+<span class="cstat-no" title="statement not covered" >      classes = this.el.className.split(' ');</span>
+<span class="cstat-no" title="statement not covered" >      newClasses = [];</span>
+<span class="cstat-no" title="statement not covered" >      for (_i = 0, _len = classes.length; _i &lt; _len; _i++) {</span>
+<span class="cstat-no" title="statement not covered" >        cls = classes[_i];</span>
+<span class="cstat-no" title="statement not covered" >        if (!cls.length) {</span>
+<span class="cstat-no" title="statement not covered" >          continue;</span>
+        }
+<span class="cstat-no" title="statement not covered" >        if (match = /^odometer-theme-(.+)$/.exec(cls)) {</span>
+<span class="cstat-no" title="statement not covered" >          theme = match[1];</span>
+<span class="cstat-no" title="statement not covered" >          continue;</span>
+        }
+<span class="cstat-no" title="statement not covered" >        if (/^odometer(-|$)/.test(cls)) {</span>
+<span class="cstat-no" title="statement not covered" >          continue;</span>
+        }
+<span class="cstat-no" title="statement not covered" >        newClasses.push(cls);</span>
+      }
+<span class="cstat-no" title="statement not covered" >      newClasses.push('odometer');</span>
+<span class="cstat-no" title="statement not covered" >      if (!TRANSITION_SUPPORT) {</span>
+<span class="cstat-no" title="statement not covered" >        newClasses.push('odometer-no-transitions');</span>
+      }
+<span class="cstat-no" title="statement not covered" >      if (theme) {</span>
+<span class="cstat-no" title="statement not covered" >        newClasses.push("odometer-theme-" + theme);</span>
+      } else {
+<span class="cstat-no" title="statement not covered" >        newClasses.push("odometer-auto-theme");</span>
+      }
+<span class="cstat-no" title="statement not covered" >      this.el.className = newClasses.join(' ');</span>
+<span class="cstat-no" title="statement not covered" >      this.ribbons = {};</span>
+<span class="cstat-no" title="statement not covered" >      this.formatDigits(value);</span>
+<span class="cstat-no" title="statement not covered" >      return this.startWatchingMutations();</span>
+    };
+&nbsp;
+    Odometer.prototype.formatDigits = <span class="fstat-no" title="function not covered" >function(value) {</span>
+<span class="cstat-no" title="statement not covered" >      var digit, valueDigit, valueString, wholePart, _i, _j, _len, _len1, _ref, _ref1;</span>
+<span class="cstat-no" title="statement not covered" >      this.digits = [];</span>
+<span class="cstat-no" title="statement not covered" >      if (this.options.formatFunction) {</span>
+<span class="cstat-no" title="statement not covered" >        valueString = this.options.formatFunction(value);</span>
+<span class="cstat-no" title="statement not covered" >        _ref = valueString.split('').reverse();</span>
+<span class="cstat-no" title="statement not covered" >        for (_i = 0, _len = _ref.length; _i &lt; _len; _i++) {</span>
+<span class="cstat-no" title="statement not covered" >          valueDigit = _ref[_i];</span>
+<span class="cstat-no" title="statement not covered" >          if (valueDigit.match(/0-9/)) {</span>
+<span class="cstat-no" title="statement not covered" >            digit = this.renderDigit();</span>
+<span class="cstat-no" title="statement not covered" >            digit.querySelector('.odometer-value').innerHTML = valueDigit;</span>
+<span class="cstat-no" title="statement not covered" >            this.digits.push(digit);</span>
+<span class="cstat-no" title="statement not covered" >            this.insertDigit(digit);</span>
+          } else {
+<span class="cstat-no" title="statement not covered" >            this.addSpacer(valueDigit);</span>
+          }
+        }
+      } else {
+<span class="cstat-no" title="statement not covered" >        wholePart = !this.format.precision || !fractionalPart(value) || false;</span>
+<span class="cstat-no" title="statement not covered" >        _ref1 = value.toString().split('').reverse();</span>
+<span class="cstat-no" title="statement not covered" >        for (_j = 0, _len1 = _ref1.length; _j &lt; _len1; _j++) {</span>
+<span class="cstat-no" title="statement not covered" >          digit = _ref1[_j];</span>
+<span class="cstat-no" title="statement not covered" >          if (digit === '.') {</span>
+<span class="cstat-no" title="statement not covered" >            wholePart = true;</span>
+          }
+<span class="cstat-no" title="statement not covered" >          this.addDigit(digit, wholePart);</span>
+        }
+      }
+    };
+&nbsp;
+    Odometer.prototype.update = <span class="fstat-no" title="function not covered" >function(newValue) {</span>
+<span class="cstat-no" title="statement not covered" >      var diff,</span>
+        _this = this;
+<span class="cstat-no" title="statement not covered" >      newValue = this.cleanValue(newValue);</span>
+<span class="cstat-no" title="statement not covered" >      if (!(diff = newValue - this.value)) {</span>
+<span class="cstat-no" title="statement not covered" >        return;</span>
+      }
+<span class="cstat-no" title="statement not covered" >      removeClass(this.el, 'odometer-animating-up odometer-animating-down odometer-animating');</span>
+<span class="cstat-no" title="statement not covered" >      if (diff &gt; 0) {</span>
+<span class="cstat-no" title="statement not covered" >        addClass(this.el, 'odometer-animating-up');</span>
+      } else {
+<span class="cstat-no" title="statement not covered" >        addClass(this.el, 'odometer-animating-down');</span>
+      }
+<span class="cstat-no" title="statement not covered" >      this.stopWatchingMutations();</span>
+<span class="cstat-no" title="statement not covered" >      this.animate(newValue);</span>
+<span class="cstat-no" title="statement not covered" >      this.startWatchingMutations();</span>
+<span class="cstat-no" title="statement not covered" >      setTimeout(<span class="fstat-no" title="function not covered" >function() {</span></span>
+<span class="cstat-no" title="statement not covered" >        _this.el.offsetHeight;</span>
+<span class="cstat-no" title="statement not covered" >        return addClass(_this.el, 'odometer-animating');</span>
+      }, 0);
+<span class="cstat-no" title="statement not covered" >      return this.value = newValue;</span>
+    };
+&nbsp;
+    Odometer.prototype.renderDigit = <span class="fstat-no" title="function not covered" >function() {</span>
+<span class="cstat-no" title="statement not covered" >      return createFromHTML(DIGIT_HTML);</span>
+    };
+&nbsp;
+    Odometer.prototype.insertDigit = <span class="fstat-no" title="function not covered" >function(digit, before) {</span>
+<span class="cstat-no" title="statement not covered" >      if (before != null) {</span>
+<span class="cstat-no" title="statement not covered" >        return this.inside.insertBefore(digit, before);</span>
+      } else <span class="cstat-no" title="statement not covered" >if (!this.inside.children.length) {</span>
+<span class="cstat-no" title="statement not covered" >        return this.inside.appendChild(digit);</span>
+      } else {
+<span class="cstat-no" title="statement not covered" >        return this.inside.insertBefore(digit, this.inside.children[0]);</span>
+      }
+    };
+&nbsp;
+    Odometer.prototype.addSpacer = <span class="fstat-no" title="function not covered" >function(chr, before, extraClasses) {</span>
+<span class="cstat-no" title="statement not covered" >      var spacer;</span>
+<span class="cstat-no" title="statement not covered" >      spacer = createFromHTML(FORMAT_MARK_HTML);</span>
+<span class="cstat-no" title="statement not covered" >      spacer.innerHTML = chr;</span>
+<span class="cstat-no" title="statement not covered" >      if (extraClasses) {</span>
+<span class="cstat-no" title="statement not covered" >        addClass(spacer, extraClasses);</span>
+      }
+<span class="cstat-no" title="statement not covered" >      return this.insertDigit(spacer, before);</span>
+    };
+&nbsp;
+    Odometer.prototype.addDigit = <span class="fstat-no" title="function not covered" >function(value, repeating) {</span>
+<span class="cstat-no" title="statement not covered" >      var chr, digit, resetted, _ref;</span>
+<span class="cstat-no" title="statement not covered" >      if (repeating == null) {</span>
+<span class="cstat-no" title="statement not covered" >        repeating = true;</span>
+      }
+<span class="cstat-no" title="statement not covered" >      if (value === '-') {</span>
+<span class="cstat-no" title="statement not covered" >        return this.addSpacer(value, null, 'odometer-negation-mark');</span>
+      }
+<span class="cstat-no" title="statement not covered" >      if (value === '.') {</span>
+<span class="cstat-no" title="statement not covered" >        return this.addSpacer((_ref = this.format.radix) != null ? _ref : '.', null, 'odometer-radix-mark');</span>
+      }
+<span class="cstat-no" title="statement not covered" >      if (repeating) {</span>
+<span class="cstat-no" title="statement not covered" >        resetted = false;</span>
+<span class="cstat-no" title="statement not covered" >        while (true) {</span>
+<span class="cstat-no" title="statement not covered" >          if (!this.format.repeating.length) {</span>
+<span class="cstat-no" title="statement not covered" >            if (resetted) {</span>
+<span class="cstat-no" title="statement not covered" >              throw new Error("Bad odometer format without digits");</span>
+            }
+<span class="cstat-no" title="statement not covered" >            this.resetFormat();</span>
+<span class="cstat-no" title="statement not covered" >            resetted = true;</span>
+          }
+<span class="cstat-no" title="statement not covered" >          chr = this.format.repeating[this.format.repeating.length - 1];</span>
+<span class="cstat-no" title="statement not covered" >          this.format.repeating = this.format.repeating.substring(0, this.format.repeating.length - 1);</span>
+<span class="cstat-no" title="statement not covered" >          if (chr === 'd') {</span>
+<span class="cstat-no" title="statement not covered" >            break;</span>
+          }
+<span class="cstat-no" title="statement not covered" >          this.addSpacer(chr);</span>
+        }
+      }
+<span class="cstat-no" title="statement not covered" >      digit = this.renderDigit();</span>
+<span class="cstat-no" title="statement not covered" >      digit.querySelector('.odometer-value').innerHTML = value;</span>
+<span class="cstat-no" title="statement not covered" >      this.digits.push(digit);</span>
+<span class="cstat-no" title="statement not covered" >      return this.insertDigit(digit);</span>
+    };
+&nbsp;
+    Odometer.prototype.animate = <span class="fstat-no" title="function not covered" >function(newValue) {</span>
+<span class="cstat-no" title="statement not covered" >      if (!TRANSITION_SUPPORT || this.options.animation === 'count') {</span>
+<span class="cstat-no" title="statement not covered" >        return this.animateCount(newValue);</span>
+      } else {
+<span class="cstat-no" title="statement not covered" >        return this.animateSlide(newValue);</span>
+      }
+    };
+&nbsp;
+    Odometer.prototype.animateCount = <span class="fstat-no" title="function not covered" >function(newValue) {</span>
+<span class="cstat-no" title="statement not covered" >      var cur, diff, last, start, tick,</span>
+        _this = this;
+<span class="cstat-no" title="statement not covered" >      if (!(diff = +newValue - this.value)) {</span>
+<span class="cstat-no" title="statement not covered" >        return;</span>
+      }
+<span class="cstat-no" title="statement not covered" >      start = last = now();</span>
+<span class="cstat-no" title="statement not covered" >      cur = this.value;</span>
+<span class="cstat-no" title="statement not covered" >      return (tick = <span class="fstat-no" title="function not covered" >function() {</span></span>
+<span class="cstat-no" title="statement not covered" >        var delta, dist, fraction;</span>
+<span class="cstat-no" title="statement not covered" >        if ((now() - start) &gt; _this.options.duration) {</span>
+<span class="cstat-no" title="statement not covered" >          _this.value = newValue;</span>
+<span class="cstat-no" title="statement not covered" >          _this.render();</span>
+<span class="cstat-no" title="statement not covered" >          trigger(_this.el, 'odometerdone');</span>
+<span class="cstat-no" title="statement not covered" >          return;</span>
+        }
+<span class="cstat-no" title="statement not covered" >        delta = now() - last;</span>
+<span class="cstat-no" title="statement not covered" >        if (delta &gt; COUNT_MS_PER_FRAME) {</span>
+<span class="cstat-no" title="statement not covered" >          last = now();</span>
+<span class="cstat-no" title="statement not covered" >          fraction = delta / _this.options.duration;</span>
+<span class="cstat-no" title="statement not covered" >          dist = diff * fraction;</span>
+<span class="cstat-no" title="statement not covered" >          cur += dist;</span>
+<span class="cstat-no" title="statement not covered" >          _this.render(Math.round(cur));</span>
+        }
+<span class="cstat-no" title="statement not covered" >        if (requestAnimationFrame != null) {</span>
+<span class="cstat-no" title="statement not covered" >          return requestAnimationFrame(tick);</span>
+        } else {
+<span class="cstat-no" title="statement not covered" >          return setTimeout(tick, COUNT_MS_PER_FRAME);</span>
+        }
+      })();
+    };
+&nbsp;
+    Odometer.prototype.getDigitCount = <span class="fstat-no" title="function not covered" >function() {</span>
+<span class="cstat-no" title="statement not covered" >      var i, max, value, values, _i, _len;</span>
+<span class="cstat-no" title="statement not covered" >      values = 1 &lt;= arguments.length ? __slice.call(arguments, 0) : [];</span>
+<span class="cstat-no" title="statement not covered" >      for (i = _i = 0, _len = values.length; _i &lt; _len; i = ++_i) {</span>
+<span class="cstat-no" title="statement not covered" >        value = values[i];</span>
+<span class="cstat-no" title="statement not covered" >        values[i] = Math.abs(value);</span>
+      }
+<span class="cstat-no" title="statement not covered" >      max = Math.max.apply(Math, values);</span>
+<span class="cstat-no" title="statement not covered" >      return Math.ceil(Math.log(max + 1) / Math.log(10));</span>
+    };
+&nbsp;
+    Odometer.prototype.getFractionalDigitCount = <span class="fstat-no" title="function not covered" >function() {</span>
+<span class="cstat-no" title="statement not covered" >      var i, parser, parts, value, values, _i, _len;</span>
+<span class="cstat-no" title="statement not covered" >      values = 1 &lt;= arguments.length ? __slice.call(arguments, 0) : [];</span>
+<span class="cstat-no" title="statement not covered" >      parser = /^\-?\d*\.(\d*?)0*$/;</span>
+<span class="cstat-no" title="statement not covered" >      for (i = _i = 0, _len = values.length; _i &lt; _len; i = ++_i) {</span>
+<span class="cstat-no" title="statement not covered" >        value = values[i];</span>
+<span class="cstat-no" title="statement not covered" >        values[i] = value.toString();</span>
+<span class="cstat-no" title="statement not covered" >        parts = parser.exec(values[i]);</span>
+<span class="cstat-no" title="statement not covered" >        if (parts == null) {</span>
+<span class="cstat-no" title="statement not covered" >          values[i] = 0;</span>
+        } else {
+<span class="cstat-no" title="statement not covered" >          values[i] = parts[1].length;</span>
+        }
+      }
+<span class="cstat-no" title="statement not covered" >      return Math.max.apply(Math, values);</span>
+    };
+&nbsp;
+    Odometer.prototype.resetDigits = <span class="fstat-no" title="function not covered" >function() {</span>
+<span class="cstat-no" title="statement not covered" >      this.digits = [];</span>
+<span class="cstat-no" title="statement not covered" >      this.ribbons = [];</span>
+<span class="cstat-no" title="statement not covered" >      this.inside.innerHTML = '';</span>
+<span class="cstat-no" title="statement not covered" >      return this.resetFormat();</span>
+    };
+&nbsp;
+    Odometer.prototype.animateSlide = <span class="fstat-no" title="function not covered" >function(newValue) {</span>
+<span class="cstat-no" title="statement not covered" >      var boosted, cur, diff, digitCount, digits, dist, end, fractionalCount, frame, frames, i, incr, j, mark, numEl, oldValue, start, _base, _i, _j, _k, _l, _len, _len1, _len2, _m, _ref, _results;</span>
+<span class="cstat-no" title="statement not covered" >      oldValue = this.value;</span>
+<span class="cstat-no" title="statement not covered" >      fractionalCount = this.getFractionalDigitCount(oldValue, newValue);</span>
+<span class="cstat-no" title="statement not covered" >      if (fractionalCount) {</span>
+<span class="cstat-no" title="statement not covered" >        newValue = newValue * Math.pow(10, fractionalCount);</span>
+<span class="cstat-no" title="statement not covered" >        oldValue = oldValue * Math.pow(10, fractionalCount);</span>
+      }
+<span class="cstat-no" title="statement not covered" >      if (!(diff = newValue - oldValue)) {</span>
+<span class="cstat-no" title="statement not covered" >        return;</span>
+      }
+<span class="cstat-no" title="statement not covered" >      this.bindTransitionEnd();</span>
+<span class="cstat-no" title="statement not covered" >      digitCount = this.getDigitCount(oldValue, newValue);</span>
+<span class="cstat-no" title="statement not covered" >      digits = [];</span>
+<span class="cstat-no" title="statement not covered" >      boosted = 0;</span>
+<span class="cstat-no" title="statement not covered" >      for (i = _i = 0; 0 &lt;= digitCount ? _i &lt; digitCount : _i &gt; digitCount; i = 0 &lt;= digitCount ? ++_i : --_i) {</span>
+<span class="cstat-no" title="statement not covered" >        start = truncate(oldValue / Math.pow(10, digitCount - i - 1));</span>
+<span class="cstat-no" title="statement not covered" >        end = truncate(newValue / Math.pow(10, digitCount - i - 1));</span>
+<span class="cstat-no" title="statement not covered" >        dist = end - start;</span>
+<span class="cstat-no" title="statement not covered" >        if (Math.abs(dist) &gt; this.MAX_VALUES) {</span>
+<span class="cstat-no" title="statement not covered" >          frames = [];</span>
+<span class="cstat-no" title="statement not covered" >          incr = dist / (this.MAX_VALUES + this.MAX_VALUES * boosted * DIGIT_SPEEDBOOST);</span>
+<span class="cstat-no" title="statement not covered" >          cur = start;</span>
+<span class="cstat-no" title="statement not covered" >          while ((dist &gt; 0 &amp;&amp; cur &lt; end) || (dist &lt; 0 &amp;&amp; cur &gt; end)) {</span>
+<span class="cstat-no" title="statement not covered" >            frames.push(Math.round(cur));</span>
+<span class="cstat-no" title="statement not covered" >            cur += incr;</span>
+          }
+<span class="cstat-no" title="statement not covered" >          if (frames[frames.length - 1] !== end) {</span>
+<span class="cstat-no" title="statement not covered" >            frames.push(end);</span>
+          }
+<span class="cstat-no" title="statement not covered" >          boosted++;</span>
+        } else {
+<span class="cstat-no" title="statement not covered" >          frames = (<span class="fstat-no" title="function not covered" >function() {</span></span>
+<span class="cstat-no" title="statement not covered" >            _results = [];</span>
+<span class="cstat-no" title="statement not covered" >            for (var _j = start; start &lt;= end ? _j &lt;= end : _j &gt;= end; start &lt;= end ? _j++ : _j--){ <span class="cstat-no" title="statement not covered" >_results.push(_j); </span>}</span>
+<span class="cstat-no" title="statement not covered" >            return _results;</span>
+          }).apply(this);
+        }
+<span class="cstat-no" title="statement not covered" >        for (i = _k = 0, _len = frames.length; _k &lt; _len; i = ++_k) {</span>
+<span class="cstat-no" title="statement not covered" >          frame = frames[i];</span>
+<span class="cstat-no" title="statement not covered" >          frames[i] = Math.abs(frame % 10);</span>
+        }
+<span class="cstat-no" title="statement not covered" >        digits.push(frames);</span>
+      }
+<span class="cstat-no" title="statement not covered" >      this.resetDigits();</span>
+<span class="cstat-no" title="statement not covered" >      _ref = digits.reverse();</span>
+<span class="cstat-no" title="statement not covered" >      for (i = _l = 0, _len1 = _ref.length; _l &lt; _len1; i = ++_l) {</span>
+<span class="cstat-no" title="statement not covered" >        frames = _ref[i];</span>
+<span class="cstat-no" title="statement not covered" >        if (!this.digits[i]) {</span>
+<span class="cstat-no" title="statement not covered" >          this.addDigit(' ', i &gt;= fractionalCount);</span>
+        }
+<span class="cstat-no" title="statement not covered" >        if ((_base = this.ribbons)[i] == null) {</span>
+<span class="cstat-no" title="statement not covered" >          _base[i] = this.digits[i].querySelector('.odometer-ribbon-inner');</span>
+        }
+<span class="cstat-no" title="statement not covered" >        this.ribbons[i].innerHTML = '';</span>
+<span class="cstat-no" title="statement not covered" >        if (diff &lt; 0) {</span>
+<span class="cstat-no" title="statement not covered" >          frames = frames.reverse();</span>
+        }
+<span class="cstat-no" title="statement not covered" >        for (j = _m = 0, _len2 = frames.length; _m &lt; _len2; j = ++_m) {</span>
+<span class="cstat-no" title="statement not covered" >          frame = frames[j];</span>
+<span class="cstat-no" title="statement not covered" >          numEl = document.createElement('div');</span>
+<span class="cstat-no" title="statement not covered" >          numEl.className = 'odometer-value';</span>
+<span class="cstat-no" title="statement not covered" >          numEl.innerHTML = frame;</span>
+<span class="cstat-no" title="statement not covered" >          this.ribbons[i].appendChild(numEl);</span>
+<span class="cstat-no" title="statement not covered" >          if (j === frames.length - 1) {</span>
+<span class="cstat-no" title="statement not covered" >            addClass(numEl, 'odometer-last-value');</span>
+          }
+<span class="cstat-no" title="statement not covered" >          if (j === 0) {</span>
+<span class="cstat-no" title="statement not covered" >            addClass(numEl, 'odometer-first-value');</span>
+          }
+        }
+      }
+<span class="cstat-no" title="statement not covered" >      if (start &lt; 0) {</span>
+<span class="cstat-no" title="statement not covered" >        this.addDigit('-');</span>
+      }
+<span class="cstat-no" title="statement not covered" >      mark = this.inside.querySelector('.odometer-radix-mark');</span>
+<span class="cstat-no" title="statement not covered" >      if (mark != null) {</span>
+<span class="cstat-no" title="statement not covered" >        mark.parent.removeChild(mark);</span>
+      }
+<span class="cstat-no" title="statement not covered" >      if (fractionalCount) {</span>
+<span class="cstat-no" title="statement not covered" >        return this.addSpacer(this.format.radix, this.digits[fractionalCount - 1], 'odometer-radix-mark');</span>
+      }
+    };
+&nbsp;
+    return Odometer;
+&nbsp;
+  })();
+&nbsp;
+  Odometer.options = (_ref = window.odometerOptions) != null ? <span class="branch-0 cbranch-no" title="branch not covered" >_ref </span>: {};
+&nbsp;
+  setTimeout(<span class="fstat-no" title="function not covered" >function() {</span>
+<span class="cstat-no" title="statement not covered" >    var k, v, _base, _ref1, _results;</span>
+<span class="cstat-no" title="statement not covered" >    if (window.odometerOptions) {</span>
+<span class="cstat-no" title="statement not covered" >      _ref1 = window.odometerOptions;</span>
+<span class="cstat-no" title="statement not covered" >      _results = [];</span>
+<span class="cstat-no" title="statement not covered" >      for (k in _ref1) {</span>
+<span class="cstat-no" title="statement not covered" >        v = _ref1[k];</span>
+<span class="cstat-no" title="statement not covered" >        _results.push((_base = Odometer.options)[k] != null ? (_base = Odometer.options)[k] : _base[k] = v);</span>
+      }
+<span class="cstat-no" title="statement not covered" >      return _results;</span>
+    }
+  }, 0);
+&nbsp;
+  Odometer.init = function() {
+    var el, elements, _i, _len, _ref1, _results;
+    <span class="missing-if-branch" title="if path not taken" >I</span>if (document.querySelectorAll == null) {
+<span class="cstat-no" title="statement not covered" >      return;</span>
+    }
+    elements = document.querySelectorAll(Odometer.options.selector || '.odometer');
+    _results = [];
+    for (_i = 0, _len = elements.length; _i &lt; _len; _i++) {
+<span class="cstat-no" title="statement not covered" >      el = elements[_i];</span>
+<span class="cstat-no" title="statement not covered" >      _results.push(el.odometer = new Odometer({</span>
+        el: el,
+        value: (_ref1 = el.innerText) != null ? _ref1 : el.textContent
+      }));
+    }
+    return _results;
+  };
+&nbsp;
+  <span class="missing-if-branch" title="if path not taken" >I</span>if ((((_ref1 = document.documentElement) != null ? _ref1.doScroll : <span class="branch-1 cbranch-no" title="branch not covered" >void 0)</span> != null) &amp;&amp; (<span class="branch-1 cbranch-no" title="branch not covered" >document.createEventObject != null)</span>) {
+<span class="cstat-no" title="statement not covered" >    _old = document.onreadystatechange;</span>
+<span class="cstat-no" title="statement not covered" >    document.onreadystatechange = <span class="fstat-no" title="function not covered" >function() {</span></span>
+<span class="cstat-no" title="statement not covered" >      if (document.readyState === 'complete' &amp;&amp; Odometer.options.auto !== false) {</span>
+<span class="cstat-no" title="statement not covered" >        Odometer.init();</span>
+      }
+<span class="cstat-no" title="statement not covered" >      return _old != null ? _old.apply(this, arguments) : void 0;</span>
+    };
+  } else {
+    document.addEventListener('DOMContentLoaded', function() {
+      <span class="missing-if-branch" title="else path not taken" >E</span>if (Odometer.options.auto !== false) {
+        return Odometer.init();
+      }
+    }, false);
+  }
+&nbsp;
+  <span class="missing-if-branch" title="if path not taken" >I</span>if (typeof define === 'function' &amp;&amp; <span class="branch-1 cbranch-no" title="branch not covered" >define.amd)</span> {
+<span class="cstat-no" title="statement not covered" >    define(['jquery'], <span class="fstat-no" title="function not covered" >function() {</span></span>
+<span class="cstat-no" title="statement not covered" >      return Odometer;</span>
+    });
+  } else <span class="missing-if-branch" title="else path not taken" >E</span>if (typeof exports !== "undefined" &amp;&amp; exports !== null) {
+    module.exports = Odometer;
+  } else {
+<span class="cstat-no" title="statement not covered" >    window.Odometer = Odometer;</span>
+  }
+&nbsp;
+  module.exports = createFromHTML;
+&nbsp;
+}).call(this);
+&nbsp;</pre></td></tr>
+</table></pre>
+<div class='push'></div><!-- for sticky footer -->
+</div><!-- /wrapper -->
+<div class='footer quiet pad2 space-top1 center small'>
+  Code coverage
+  generated by <a href="http://istanbul-js.org/" target="_blank">istanbul</a> at Sun Apr 10 2016 19:55:01 GMT-0700 (PDT)
+</div>
+</div>
+<script src="../prettify.js"></script>
+<script>
+window.onload = function () {
+        if (typeof prettyPrint === 'function') {
+            prettyPrint();
+        }
+};
+</script>
+<script src="../sorter.js"></script>
+</body>
+</html>

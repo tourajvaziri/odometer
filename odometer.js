@@ -650,4 +650,7 @@
     window.Odometer = Odometer;
   }
 
+  module.exports = truncate;
+  module.exports = round;
+
 }).call(this);

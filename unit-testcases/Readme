@@ -1,0 +1,17 @@
+NOTE: Install npm on your machine if you dont have: i.e.    brew install npm
+NOTE: For information on Jest framework look at : http://facebook.github.io/jest/
+NOTE: To Install Jest globally run: npm install -g jest-cli
+
+The unit tests are in ‘__tests__’ folder.
+
+Navigate to directory ‘unit-testcases’
+Run the following command to set up jest:
+npm install --save-dev jest-cli
+
+For running the unit tests:
+npm test
+
+For running coverage:
+jest --coverage
+
+Coverage result is found in the ‘coverage’ directory after running the above command.
